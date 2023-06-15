@@ -1,0 +1,6 @@
+
+<launch>
+	<arg name="rvizconfig" default="$(find qingzhou_nav)/rviz/gmapping.rviz" />
+	<node pkg="rviz" type="rviz" name="rviz" args="-d $(arg rvizconfig)" required="true" />
+	
+</launch>

@@ -1,0 +1,8 @@
+prefix=/home/qyb/qingzhou_ws/install
+
+Name: s_road
+Description: Description of s_road
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

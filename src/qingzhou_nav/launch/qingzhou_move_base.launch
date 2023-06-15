@@ -1,0 +1,56 @@
+<?xml version="1.0" ?>
+<launch>
+  <master auto="start"/>
+
+  <include file="$(find qingzhou_nav)/launch/ydlidar.launch" />
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find qingzhou_nav)/maps/2021070702.yaml" output="screen"/>
+
+  <include file="$(find qingzhou_nav)/launch/amcl.launch" />
+  <!-- <include file="$(find qingzhou_nav)/launch/rrviz.launch" /> -->
+  <!-- <include file="$(find qingzhou_nav)/launch/gmapping.launch" /> -->
+  <!-- <arg name="rvizconfig" default="$(find qingzhou_nav)/rviz/move_bace.rviz" />
+	<node pkg="rviz" type="rviz" name="rviz" args="-d $(arg rvizconfig)" required="true" /> -->
+
+
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+	  
+    <param name="base_global_planner" value="global_planner/GlobalPlanner" />
+    <param name="planner_frequency" value="1.0" />
+    <param name="planner_patience" value="5.0" />
+    <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" /> 
+    <!-- <param name="controller_frequency" value="5.0" /> -->
+    <!-- <param name="controller_patience" value="5.0" />  -->
+
+    <!-- <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" /> -->
+    <!-- <param name="controller_frequency" value="5.0" />
+    <param name="controller_patience" value="5.0" /> -->
+
+    <rosparam file="$(find qingzhou_nav)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find qingzhou_nav)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find qingzhou_nav)/config/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find qingzhou_nav)/config/global_costmap_params.yaml" command="load" />
+    <!-- <rosparam file="$(find qingzhou_nav)/config/dwa_local_planner_params.yaml" command="load" /> -->
+    <rosparam file="$(find qingzhou_nav)/config/teb_local_planner_params.yaml" command="load" />
+    <rosparam file="$(find qingzhou_nav)/config/global_planner_params.yaml" command="load" />
+    <!-- <remap from="/cmd_vel" to="cmd_vel_718"/> -->
+    <!-- <rosparam file="$(find qingzhou_nav)/config/teb_local_planner_params.yaml" command="load" /> -->
+    <param name="recovery_behavior_enabled" value="false"/>
+
+    <!-- <param name="base_global_planner" value="global_planner/GlobalPlanner"/>
+    <param name="controller_frequency" value="10.0"/> 
+    <param name="controller_patiente" value="15.0"/> -->
+    <!-- <param name="recovery_behavior_enabled" value="false"/> -->
+    <!-- <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" /> -->
+    <!-- <param name="controller_frequency" value="10.0" />
+    <param name="controller_patience" value="15.0" /> -->
+    <!-- <remap from="/odom" to="/odom_ekf"/> -->
+  </node>
+  
+  <node pkg="qingzhou_nav" type="qingzhou_nav_node" respawn="false" name="qingzhou_nav_node" output="screen"/>
+  <!-- <node pkg="rviz" type="rviz" name="rviz" required="true"  args="-d $(find qingzhou_nav)/rviz/move_base.rviz"/> -->
+  <!-- <arg name="rvizconfig" default="$(find qingzhou_nav)/rviz/gmapping.rviz" />
+	<node pkg="rviz" type="rviz" name="rviz" args="-d $(arg rvizconfig)" required="true" /> -->
+
+
+
+</launch>
